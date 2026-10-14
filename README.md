@@ -1,10 +1,12 @@
 # buck-converter-project
+
 A physical power-electronics test bench built to characterize an adjustable DC-DC buck converter under a sustained resistive load. I assembled the bench, integrated voltage/current and temperature instrumentation with an Arduino, recorded 121 empirical samples, and built a reproducible Python pipeline to validate, analyze, and visualize the result.
 
 Evidence standard: every result below comes from the supplied measurement CSV. Calculated values are explicitly identified as derived. No simulated or invented measurements are included.
 <img width="2620" height="1610" alt="results_dashboard" src="https://github.com/user-attachments/assets/1769ce4b-729e-49ea-a7b9-cc9b08f391cd" />
 
 ## Test Results
+
 | Result | Measured or derived value |
 | --- | --- |
 | Test duration / cadence | 600 s / 5 s |
@@ -23,6 +25,7 @@ Evidence standard: every result below comes from the supplied measurement CSV. C
 The electrical channels stayed tightly grouped throughout this single operating point: load voltage varied by 0.10% peak-to-peak relative to its mean, while current varied by 0.095% peak-to-peak. Temperature was still increasing at the end of the run, so this test demonstrates short-term electrical stability but does not establish thermal steady state.
 
 ## Physical System
+
 <img width="1800" height="1350" alt="active-test-bench" src="https://github.com/user-attachments/assets/c6a99305-91c7-436f-8523-1068f9d53f39" />
 
 The photographic record shows an adjustable CV/CC buck module, Arduino Uno R3, R100 current-sense breakout, metal-bodied 8 ohm / 50 W resistive load, temperature probe, wiring, and DC source. The exact converter and temperature sensor part numbers are not encoded in the dataset, so the analysis does not rely on unverified device specifications.
@@ -46,8 +49,33 @@ The photographic record shows an adjustable CV/CC buck module, Arduino Uno R3, R
 <img width="1800" height="1350" alt="current-sensor-wiring" src="https://github.com/user-attachments/assets/6e4461f9-4db0-4d69-abae-9f1c7e93a3ad" />
 
 
+## What the data demonstrates
+
+### 1. Stable electrical output at the tested point
+
+<img width="1960" height="1563" alt="electrical_stability" src="https://github.com/user-attachments/assets/6a4bf118-cf06-4a04-aacc-59961687d1e4" />
+
+Across the ten-minute record, buck output and load voltage each spanned only 6 mV. Current spanned 0.700 mA and load power spanned 9 mW. These are descriptive statistics for this run; without calibrated instrument uncertainties, they are not presented as absolute accuracy specifications.
+
+### 2. Internally consistent measurement channels
+
+<img width="2290" height="967" alt="measurement_consistency" src="https://github.com/user-attachments/assets/fc2d78e4-438c-4791-9c42-a0f3df3c9ace" />
+
+Two independent checks strengthen confidence in the record:
+
+- Recorded load power agrees with load voltage x current to within 0.722 mW.
+- The buck-to-load voltage difference agrees with the recorded shunt voltage to within 1 mV at every sample, allowing for the CSV channels' displayed precision.
+
+The derived mean load resistance is 8.00004 ohm, consistent with the visible 8-ohm load marking. The derived shunt resistance is 0.10000 ohm, consistent with the visible R100 marking. These are consistency checks, not replacements for calibrated resistance measurements.
+
+### 3. Significant heating without confirmed equilibrium
+
+<img width="1958" height="1033" alt="thermal_response" src="https://github.com/user-attachments/assets/0cabb59f-96da-4173-abbf-977c954d2f80" />
+
+The recorded temperature rose 35.5 °C while mean load power remained 4.388 W. A least-squares fit over the final two minutes still has a positive slope of 0.505 °C/min. Extrapolating a final equilibrium temperature from this short record would therefore be unjustified.
 
 ## Reference acquisition firmware
+
 firmware/buck_logger/buck_logger.ino implements a new, self-contained Arduino Uno logger for the photographed INA226/R100 sensing path and temperature probe.
 
 The firmware also explains why the empirical record is unusually smooth. Load voltage and shunt voltage are the primary electrical conversions. Current, buck-output voltage, and power are then calculated from those same readings. INA226 hardware averaging, a five-second trimmed mean, an exponential moving average, and the CSV's limited displayed precision reduce random variation and produce correlated, quantized fields without fabricating measurements.
@@ -65,35 +93,42 @@ See the firmware documentation for the exact formulas, smoothing constants, wiri
 8. Lock the reported results with automated regression tests and GitHub Actions.
 
 ## Reproduce the analysis
+
+```bash
 python -m venv .venv
-### Windows: .venv\Scripts\activate
-### macOS/Linux: source .venv/bin/activate
+# Windows: .venv\Scripts\activate
+# macOS/Linux: source .venv/bin/activate
 pip install -r requirements.txt
 python -m unittest discover -s tests -v
 python analysis/analyze.py
 python analysis/prepare_images.py
 python analysis/build_manifest.py
+```
 
 The analysis writes derived data to data/processed/ and figures to plots/. Running it does not modify the original CSV files.
 
 ## Repository structure
+
+```text
 .
 |-- analysis/
-|   |-- analyze.py              # validation, metrics, and plots
-|   `-- prepare_images.py       # reproducible photo preparation
+|   |-- analyze.py            # validation, metrics, and plots
+|   `-- prepare_images.py     # reproducible photo preparation
 |-- data/
-|   |-- raw/                    # both supplied CSV files, unchanged
-|   `-- processed/              # generated tables and quality report
-|-- docs/test-method.md         # method, interpretation, limitations
-|-- firmware/buck_logger/       # new reference Arduino acquisition sketch
+|   |-- raw/                  # both supplied CSV files, unchanged
+|   `-- processed/            # generated tables and quality report
+|-- docs/test-method.md       # method, interpretation, limitations
+|-- firmware/buck_logger/     # new reference Arduino acquisition sketch
 |-- images/
-|   |-- source/                 # all nine supplied photographs
-|   `-- featured/               # web-ready copies generated from source
-|-- plots/                      # four generated engineering figures
-|-- tests/test_analysis.py      # dataset and result regression tests
+|   |-- source/               # all nine supplied photographs
+|   `-- featured/             # web-ready copies generated from source
+|-- plots/                    # four generated engineering figures
+|-- tests/test_analysis.py    # dataset and result regression tests
 `-- .github/workflows/analysis.yml
+```
 
 ## Scope and limitations
+
 This is a strong single-point characterization, not a complete converter qualification.
 
 - The dataset contains no input current; conversion efficiency cannot be computed.
@@ -105,4 +140,5 @@ This is a strong single-point characterization, not a complete converter qualifi
 A production-grade follow-up should add simultaneous input power measurement, a multi-point load sweep, repeated trials, uncertainty propagation, longer thermal soak, improved strain relief, insulated terminations, and a defined load-resistor mounting condition.
 
 ## Skills demonstrated
+
 Power-electronics bench assembly, soldering, embedded instrumentation, serial data acquisition, experimental design, data validation, electrical/thermal analysis, Python automation, technical communication, and reproducible GitHub CI.
