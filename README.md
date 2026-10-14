@@ -1,4 +1,4 @@
-# buck-converter-project
+# Buck-Converter Load Testing
 
 I designed and built a power-electronics test bench to characterize an adjustable DC-DC buck converter under continuous resistive load. The setup uses an Arduino to log voltage, current, and temperature, and I collected 121 measurements, then processed them through a reproducible Python pipeline for validation, analysis, and visualization.
 
