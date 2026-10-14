@@ -21,3 +21,8 @@ Evidence standard: every result below comes from the supplied measurement CSV. C
 | Final two-minute thermal slope | 0.505 °C/min (derived) |
 
 The electrical channels stayed tightly grouped throughout this single operating point: load voltage varied by 0.10% peak-to-peak relative to its mean, while current varied by 0.095% peak-to-peak. Temperature was still increasing at the end of the run, so this test demonstrates short-term electrical stability but does not establish thermal steady state.
+
+## Physical System
+<img width="1800" height="1350" alt="active-test-bench" src="https://github.com/user-attachments/assets/c6a99305-91c7-436f-8523-1068f9d53f39" />
+
+The photographic record shows an adjustable CV/CC buck module, Arduino Uno R3, R100 current-sense breakout, metal-bodied 8 ohm / 50 W resistive load, temperature probe, wiring, and DC source. The exact converter and temperature sensor part numbers are not encoded in the dataset, so the analysis does not rely on unverified device specifications.
