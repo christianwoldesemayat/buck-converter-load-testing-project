@@ -28,7 +28,9 @@ The electrical channels stayed tightly grouped throughout this single operating 
 The photographic record shows an adjustable CV/CC buck module, Arduino Uno R3, R100 current-sense breakout, metal-bodied 8 ohm / 50 W resistive load, temperature probe, wiring, and DC source. The exact converter and temperature sensor part numbers are not encoded in the dataset, so the analysis does not rely on unverified device specifications.
 
 
+
 <img width="1246" height="265" alt="image" src="https://github.com/user-attachments/assets/92264287-b014-41be-a2e3-9c27a3d4622a" />
+
 
 
 | Bench element | Role in the experiment |
