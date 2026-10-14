@@ -26,3 +26,46 @@ The electrical channels stayed tightly grouped throughout this single operating 
 <img width="1800" height="1350" alt="active-test-bench" src="https://github.com/user-attachments/assets/c6a99305-91c7-436f-8523-1068f9d53f39" />
 
 The photographic record shows an adjustable CV/CC buck module, Arduino Uno R3, R100 current-sense breakout, metal-bodied 8 ohm / 50 W resistive load, temperature probe, wiring, and DC source. The exact converter and temperature sensor part numbers are not encoded in the dataset, so the analysis does not rely on unverified device specifications.
+
+## Reproduce the analysis
+python -m venv .venv
+### Windows: .venv\Scripts\activate
+### macOS/Linux: source .venv/bin/activate
+pip install -r requirements.txt
+python -m unittest discover -s tests -v
+python analysis/analyze.py
+python analysis/prepare_images.py
+python analysis/build_manifest.py
+
+The analysis writes derived data to data/processed/ and figures to plots/. Running it does not modify the original CSV files.
+
+## Repository structure
+.
+|-- analysis/
+|   |-- analyze.py              # validation, metrics, and plots
+|   `-- prepare_images.py       # reproducible photo preparation
+|-- data/
+|   |-- raw/                    # both supplied CSV files, unchanged
+|   `-- processed/              # generated tables and quality report
+|-- docs/test-method.md         # method, interpretation, limitations
+|-- firmware/buck_logger/       # new reference Arduino acquisition sketch
+|-- images/
+|   |-- source/                 # all nine supplied photographs
+|   `-- featured/               # web-ready copies generated from source
+|-- plots/                      # four generated engineering figures
+|-- tests/test_analysis.py      # dataset and result regression tests
+`-- .github/workflows/analysis.yml
+
+## Scope and limitations
+This is a strong single-point characterization, not a complete converter qualification.
+
+- The dataset contains no input current; conversion efficiency cannot be computed.
+- Only one operating point and one ten-minute run are represented.
+- Calibration certificates, instrument accuracy, ambient temperature, sensor attachment details, and repeated trials were not supplied.
+- Thermal equilibrium was not reached during the recorded interval.
+- The open prototype wiring shown in the photographs is suitable for a supervised low-voltage bench experiment, not deployment.
+
+A production-grade follow-up should add simultaneous input power measurement, a multi-point load sweep, repeated trials, uncertainty propagation, longer thermal soak, improved strain relief, insulated terminations, and a defined load-resistor mounting condition.
+
+## Skills demonstrated
+Power-electronics bench assembly, soldering, embedded instrumentation, serial data acquisition, experimental design, data validation, electrical/thermal analysis, Python automation, technical communication, and reproducible GitHub CI.
