@@ -29,6 +29,15 @@ The photographic record shows an adjustable CV/CC buck module, Arduino Uno R3, R
 
 <img width="1246" height="265" alt="image" src="https://github.com/user-attachments/assets/92264287-b014-41be-a2e3-9c27a3d4622a" />
 
+| Bench element | Role in the experiment |
+|---|---|
+| Adjustable buck module | Steps the source down to the test operating point |
+| R100 current-sense breakout | Produces the recorded shunt-voltage/current channels |
+| Arduino Uno R3 | Collects instrument data for the CSV record |
+| RX24 8 ohm / 50 W resistor | Provides the sustained load |
+| Temperature probe | Tracks load thermal response |
+| Digital multimeter and soldering tools | Support assembly and bench verification |
+
 ## Reference acquisition firmware
 firmware/buck_logger/buck_logger.ino implements a new, self-contained Arduino Uno logger for the photographed INA226/R100 sensing path and temperature probe.
 
