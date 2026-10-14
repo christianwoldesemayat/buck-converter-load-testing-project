@@ -72,7 +72,7 @@ From the data, the mean load resistance works out to 8.00004 Ω, which lines up 
 
 <img width="1958" height="1033" alt="thermal_response" src="https://github.com/user-attachments/assets/0cabb59f-96da-4173-abbf-977c954d2f80" />
 
-The recorded temperature rose 35.5 °C while mean load power remained 4.388 W. A least-squares fit over the final two minutes still has a positive slope of 0.505 °C/min. Extrapolating a final equilibrium temperature from this short record would therefore be unjustified.
+Over the run, the temperature rose by 35.5 °C while the load power held steady at a mean of 4.388 W. A least-squares fit over the final two minutes still shows a positive slope of 0.505 °C/min, so the system hadn’t reached thermal equilibrium yet. Because of that, I don’t try to extrapolate a final steady-state temperature from this short record.
 
 ## Reference acquisition firmware
 
@@ -129,15 +129,15 @@ The analysis writes derived data to data/processed/ and figures to plots/. Runni
 
 ## Scope and limitations
 
-This is a strong single-point characterization, not a complete converter qualification.
+This project characterizes the converter at a single operating point; it isn’t a full qualification. A few limitations to keep in mind:
 
-- The dataset contains no input current; conversion efficiency cannot be computed.
-- Only one operating point and one ten-minute run are represented.
-- Calibration certificates, instrument accuracy, ambient temperature, sensor attachment details, and repeated trials were not supplied.
-- Thermal equilibrium was not reached during the recorded interval.
-- The open prototype wiring shown in the photographs is suitable for a supervised low-voltage bench experiment, not deployment.
+- I didn’t measure input current, so conversion efficiency can’t be calculated.
+- The data covers one operating point and a single ten-minute run.
+- I don’t have calibration certificates, instrument accuracy specs, ambient temperature, sensor mounting details, or repeated trials.
+- The system hadn’t reached thermal equilibrium by the end of the recording.
+- The open prototype wiring in the photos is fine for a supervised, low-voltage bench test, but it isn’t built for deployment.
 
-A production-grade follow-up should add simultaneous input power measurement, a multi-point load sweep, repeated trials, uncertainty propagation, longer thermal soak, improved strain relief, insulated terminations, and a defined load-resistor mounting condition.
+If I were to take this further, the next steps would be measuring input power alongside output, sweeping across multiple load points, running repeated trials, propagating measurement uncertainty, extending the thermal soak, and improving the build with proper strain relief, insulated terminations, and a defined mounting setup for the load resistor.
 
 ## Skills demonstrated
 
