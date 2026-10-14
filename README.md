@@ -1,8 +1,8 @@
 # buck-converter-project
 
-A physical power-electronics test bench built to characterize an adjustable DC-DC buck converter under a sustained resistive load. I assembled the bench, integrated voltage/current and temperature instrumentation with an Arduino, recorded 121 empirical samples, and built a reproducible Python pipeline to validate, analyze, and visualize the result.
+I designed and built a power-electronics test bench to characterize an adjustable DC-DC buck converter under continuous resistive load. The setup uses an Arduino to log voltage, current, and temperature, and I collected 121 measurements, then processed them through a reproducible Python pipeline for validation, analysis, and visualization.
 
-Evidence standard: every result below comes from the supplied measurement CSV. Calculated values are explicitly identified as derived. No simulated or invented measurements are included.
+Methodological guideline: All results in this project come directly from the recorded measurement CSV. Any values I calculated from that data are clearly labeled as derived, and no simulated or estimated measurements are included.
 <img width="2620" height="1610" alt="results_dashboard" src="https://github.com/user-attachments/assets/1769ce4b-729e-49ea-a7b9-cc9b08f391cd" />
 
 ## Test Results
@@ -55,18 +55,18 @@ The photographic record shows an adjustable CV/CC buck module, Arduino Uno R3, R
 
 <img width="1960" height="1563" alt="electrical_stability" src="https://github.com/user-attachments/assets/6a4bf118-cf06-4a04-aacc-59961687d1e4" />
 
-Across the ten-minute record, buck output and load voltage each spanned only 6 mV. Current spanned 0.700 mA and load power spanned 9 mW. These are descriptive statistics for this run; without calibrated instrument uncertainties, they are not presented as absolute accuracy specifications.
+Over the ten-minute run, the buck output and load voltage each varied by only 6 mV. Current varied by 0.700 mA, and load power by 9 mW. These numbers describe this specific run; since I didn’t have calibrated uncertainties for my instruments, they shouldn’t be read as absolute accuracy specs.
 
 ### 2. Internally consistent measurement channels
 
 <img width="2290" height="967" alt="measurement_consistency" src="https://github.com/user-attachments/assets/fc2d78e4-438c-4791-9c42-a0f3df3c9ace" />
 
-Two independent checks strengthen confidence in the record:
+I ran two independent checks to make sure the data holds together:
 
-- Recorded load power agrees with load voltage x current to within 0.722 mW.
-- The buck-to-load voltage difference agrees with the recorded shunt voltage to within 1 mV at every sample, allowing for the CSV channels' displayed precision.
+- The recorded load power matches load voltage × current to within 0.722 mW.
+- At every sample, the voltage drop between the buck output and the load matches the recorded shunt voltage to within 1 mV, accounting for the precision of the CSV channels.
 
-The derived mean load resistance is 8.00004 ohm, consistent with the visible 8-ohm load marking. The derived shunt resistance is 0.10000 ohm, consistent with the visible R100 marking. These are consistency checks, not replacements for calibrated resistance measurements.
+From the data, the mean load resistance works out to 8.00004 Ω, which lines up with the 8 Ω marking on the load. The shunt resistance comes out to 0.10000 Ω, matching its R100 marking. These checks confirm the data is self-consistent, but they aren’t a substitute for measuring the resistances with a calibrated instrument.
 
 ### 3. Significant heating without confirmed equilibrium
 
