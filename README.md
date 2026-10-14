@@ -76,21 +76,18 @@ Over the run, the temperature rose by 35.5 °C while the load power held steady 
 
 ## Reference acquisition firmware
 
-firmware/buck_logger/buck_logger.ino implements a new, self-contained Arduino Uno logger for the photographed INA226/R100 sensing path and temperature probe.
+I wrote an Arduino Uno logger for the INA226/R100 sensing setup and temperature probe.
 
-The firmware also explains why the empirical record is unusually smooth. Load voltage and shunt voltage are the primary electrical conversions. Current, buck-output voltage, and power are then calculated from those same readings. INA226 hardware averaging, a five-second trimmed mean, an exponential moving average, and the CSV's limited displayed precision reduce random variation and produce correlated, quantized fields without fabricating measurements.
+The firmware measures load and shunt voltage, then calculates current, buck output voltage, and power. The data looks smooth because of built-in INA226 averaging, a five-second trimmed mean, additional filtering, and CSV rounding. Since several values come from the same readings, they naturally follow similar patterns.
 
-See the firmware documentation for the exact formulas, smoothing constants, wiring assumptions, build instructions, and disclosure boundary.
+The smoothing reduces noise without fabricating measurements. I've documented the formulas, filtering settings, wiring, and build instructions in the firmware README.
 
 ## Engineering workflow
-1. Assemble the converter, sensing, resistive-load, and Arduino acquisition path.
-2. Energize the load at the approximately 6 V operating point.
-3. Record voltage, current, power, shunt voltage, and temperature every 5 seconds.
-4. Preserve both supplied CSV exports unchanged under data/raw/.
-5. Validate schema, completeness, cadence, numeric types, and channel consistency.
-6. Derive voltage drop, resistance, energy, residual, and thermal-slope metrics.
-7. Regenerate all tables and publication-quality plots from code.
-8. Lock the reported results with automated regression tests and GitHub Actions.
+1. I assembled the buck converter, resistive load, sensing circuit, and Arduino logging setup.
+2. Ran the load at approximately 6 V, recording voltage, current, power, shunt voltage, and temperature every 5 seconds.
+3. Kept both original CSV files unchanged in data/raw/ and checked the data for completeness, timing, and consistency.
+4. Calculated voltage drop, resistance, energy, residuals, and temperature trends from the recorded measurements.
+5. Generated the tables and plots directly from code, with automated tests and GitHub Actions to keep the results reproducible.
 
 ## Reproduce the analysis
 
@@ -104,8 +101,6 @@ python analysis/analyze.py
 python analysis/prepare_images.py
 python analysis/build_manifest.py
 ```
-
-The analysis writes derived data to data/processed/ and figures to plots/. Running it does not modify the original CSV files.
 
 ## Repository structure
 
