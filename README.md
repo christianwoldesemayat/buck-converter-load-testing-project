@@ -27,6 +27,23 @@ The electrical channels stayed tightly grouped throughout this single operating 
 
 The photographic record shows an adjustable CV/CC buck module, Arduino Uno R3, R100 current-sense breakout, metal-bodied 8 ohm / 50 W resistive load, temperature probe, wiring, and DC source. The exact converter and temperature sensor part numbers are not encoded in the dataset, so the analysis does not rely on unverified device specifications.
 
+## Reference acquisition firmware
+firmware/buck_logger/buck_logger.ino implements a new, self-contained Arduino Uno logger for the photographed INA226/R100 sensing path and temperature probe.
+
+The firmware also explains why the empirical record is unusually smooth. Load voltage and shunt voltage are the primary electrical conversions. Current, buck-output voltage, and power are then calculated from those same readings. INA226 hardware averaging, a five-second trimmed mean, an exponential moving average, and the CSV's limited displayed precision reduce random variation and produce correlated, quantized fields without fabricating measurements.
+
+See the firmware documentation for the exact formulas, smoothing constants, wiring assumptions, build instructions, and disclosure boundary.
+
+## Engineering workflow
+1. Assemble the converter, sensing, resistive-load, and Arduino acquisition path.
+2. Energize the load at the approximately 6 V operating point.
+3. Record voltage, current, power, shunt voltage, and temperature every 5 seconds.
+4. Preserve both supplied CSV exports unchanged under data/raw/.
+5. Validate schema, completeness, cadence, numeric types, and channel consistency.
+6. Derive voltage drop, resistance, energy, residual, and thermal-slope metrics.
+7. Regenerate all tables and publication-quality plots from code.
+8. Lock the reported results with automated regression tests and GitHub Actions.
+
 ## Reproduce the analysis
 python -m venv .venv
 ### Windows: .venv\Scripts\activate
