@@ -19,3 +19,5 @@ Evidence standard: every result below comes from the supplied measurement CSV. C
 | Temperature | 24.0 to 59.5 °C |
 | Temperature rise | 35.5 °C |
 | Final two-minute thermal slope | 0.505 °C/min (derived) |
+
+The electrical channels stayed tightly grouped throughout this single operating point: load voltage varied by 0.10% peak-to-peak relative to its mean, while current varied by 0.095% peak-to-peak. Temperature was still increasing at the end of the run, so this test demonstrates short-term electrical stability but does not establish thermal steady state.
