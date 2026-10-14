@@ -42,6 +42,11 @@ The photographic record shows an adjustable CV/CC buck module, Arduino Uno R3, R
 | Temperature probe | Tracks load thermal response |
 | Digital multimeter and soldering tools | Support assembly and bench verification |
 
+
+<img width="1800" height="1350" alt="current-sensor-wiring" src="https://github.com/user-attachments/assets/6e4461f9-4db0-4d69-abae-9f1c7e93a3ad" />
+
+
+
 ## Reference acquisition firmware
 firmware/buck_logger/buck_logger.ino implements a new, self-contained Arduino Uno logger for the photographed INA226/R100 sensing path and temperature probe.
 
